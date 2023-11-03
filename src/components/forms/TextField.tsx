@@ -7,19 +7,19 @@ type TextFieldProps = {
 }
 
 const TextField = ({displayName, fieldName}: TextFieldProps) => {
-  const {handleChange} = useFormikContext<any>();
+  const {handleChange, values} = useFormikContext<any>();
   return (
-    <>
-    <label className="mb-2" htmlFor={fieldName}>
-      {displayName}
-    </label>
-    <Input type="text" name={fieldName} id={fieldName} onChange={handleChange} />
-    <ErrorMessage
-      name={fieldName}
-      component="div"
-      children={(error) => <div className="text-[#ff4d4f]">{error}</div>}
-    />
-    </>
+    <div className='flex flex-col mt-4 mb-2'>
+      <label className="mb-2" htmlFor={fieldName}>
+        {displayName}
+      </label>
+      <Input type="text" name={fieldName} id={fieldName} value={values[fieldName]} onChange={handleChange} />
+      <ErrorMessage
+        name={fieldName}
+        component="div"
+        children={(error) => <div className="text-[#ff4d4f]">{error}</div>}
+      />
+    </div>
   )
 }
 

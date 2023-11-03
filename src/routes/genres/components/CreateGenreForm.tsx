@@ -1,6 +1,6 @@
 import { ErrorMessage, Form, Formik } from 'formik'
 import Button from "../../../components/Button"
-import Input from '../../../components/Input';
+import TextField from '../../../components/forms/TextField';
 import * as Yup from "yup"
 
 const CreateGenreForm = () => {
@@ -9,8 +9,6 @@ const CreateGenreForm = () => {
       <h3 className='mt-5 mb-5 font-semibold text-xl leading-6'>Create a Genre</h3>
       <Formik
         initialValues={{ name: '' }}
-        validate={values => {
-        }}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
@@ -26,18 +24,10 @@ const CreateGenreForm = () => {
         })}
       >
        {({ 
-          values,
-          errors,
-          touched,
-          handleChange,
-          handleBlur,
-          handleSubmit,
           isSubmitting,
         }) => (
          <Form className='flex flex-col'>
-           <label className='mb-2' htmlFor='name'>Name</label>
-           <Input className='' type="text" name="name" id="name" onChange={handleChange} />
-           <ErrorMessage name="name" component="div" children={error => <div className='text-[#ff4d4f]'>{error}</div>} />
+           <TextField displayName="Name" fieldName="name" />
            <Button disabled={isSubmitting} htmlType="submit" className="mt-7">
              Submit
            </Button>

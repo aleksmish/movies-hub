@@ -9,8 +9,8 @@ type DatePickerProps = {
 const DatePickerField = ({displayName, fieldName}: DatePickerProps) => {
   const {values} = useFormikContext<any>();
   return (
-    <>
-      <label className="mt-4 mb-2" htmlFor={fieldName}>
+    <div className='flex flex-col mt-4 mb-2'>
+      <label className="mb-2" htmlFor={fieldName}>
         {displayName}
       </label>
       <DatePicker
@@ -28,7 +28,7 @@ const DatePickerField = ({displayName, fieldName}: DatePickerProps) => {
         component="div"
         children={(error) => <div className="text-[#ff4d4f]">{error}</div>}
       />
-    </>
+    </div>
   )
 }
 

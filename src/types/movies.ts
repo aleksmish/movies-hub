@@ -4,6 +4,15 @@ export type Movie = {
   poster: string;
 }
 
+export type MovieCreation = {
+  title: string;
+  inTheaters: boolean;
+  trailer: string;
+  releaseDate?: Date;
+  poster?: File,
+  posterURL?: string;
+}
+
 export type LandingPage = {
   inTheaters: Movie[];
   upcomingReleases: Movie;
