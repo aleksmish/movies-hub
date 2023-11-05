@@ -5,7 +5,7 @@ import FilterMovies from './components/FilterMovies'
 
 const Home = () => {
   const [genres, setGenres] = useState([])
-  const [movies, setMovies] = useState<Movie[] | null>(null)
+  const [movies, setMovies] = useState<Movie[] | null>([])
 
   const moviesTest = [
     {
@@ -21,7 +21,6 @@ const Home = () => {
   ]
   useEffect(() => {
     setTimeout(() => {
-      setMovies(moviesTest);
     }, 2000)
   }, [])
   return (

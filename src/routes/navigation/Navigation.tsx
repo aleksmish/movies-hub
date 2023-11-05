@@ -13,6 +13,7 @@ const Navigation = () => {
           <div className="flex gap-5 flex-row self-center justify-center content-center">
             <div><a href="/actors">Actors</a></div>
             <div><a href="/genres">Genres</a></div>
+            <div><a href="/movies">Movies</a></div>
             <div><a href="/movie-theaters">Movie Theaters</a></div>
           </div>
         </div>
