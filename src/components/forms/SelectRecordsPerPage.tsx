@@ -1,5 +1,4 @@
-import { Select } from 'antd'
-import React from 'react'
+import { Select } from 'antd';
 
 type SelectRecordsPerPageProps = {
   onChange: (recordsPerPage: number) => void;

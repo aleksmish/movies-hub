@@ -6,7 +6,7 @@ import { GenreCreation } from '../../../types/genres';
 
 type GenreFormProps = {
   genreCreation?: GenreCreation;
-  onSubmit: (genre: GenreCreation) => Promise<void>;
+  onSubmit: (genre: GenreCreation) => void;
 }
 
 const GenreForm = ({onSubmit, genreCreation}: GenreFormProps) => {

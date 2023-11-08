@@ -33,7 +33,7 @@ function App() {
           <Route path='actors'>
             <Route index element={<ActorsPage />} />
             <Route path='create' element={<CreateActorPage />} />
-            <Route path='edit' element={<EditActorPage />} />
+            <Route path='edit/:id' element={<EditActorPage />} />
           </Route>
           <Route path='movie-theaters'>
             <Route index element={<MovieTheatersPage />} />

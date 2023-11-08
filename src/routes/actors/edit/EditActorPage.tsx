@@ -1,12 +1,36 @@
-import EditActorForm from '../components/EditActor'
+import EditEntity from "../../../components/EditEntity";
+import { actorsURL } from "../../../endpoints";
+import { Actor, ActorCreation } from "../../../types/actors";
+import { convertActorToFormData } from "../../../utils/formData";
+import ActorForm from "../components/ActorForm";
+import dayjs from "dayjs";
 
 const EditActorPage = () => {
-  return (
-    <div className='h-[70px] flex flex-col content-center max-w-[1200px] w-full m-auto p-5'>
-      <h3 className='mt-5 mb-5 font-semibold text-xl leading-6'>Edit an Actor</h3>
-      <EditActorForm />
-    </div>
-  )
-}
+  const transform = (actor: Actor): ActorCreation => {
+    return {
+      name: actor.name,
+      pictureURL: actor.picture,
+      biography: actor.biography,
+      dateOfBirth: dayjs(actor.dateOfBirth),
+    };
+  };
 
-export default EditActorPage
+  return (
+    <EditEntity<ActorCreation, Actor>
+      url={actorsURL}
+      indexURL="/actors"
+      entityName="Actor"
+      transformFormData={convertActorToFormData}
+      transform={transform}
+    >
+      {(entity, handleEditEntity) => (
+        <ActorForm
+          actorCreation={entity}
+          onSubmit={async (values) => await handleEditEntity(values)}
+        />
+      )}
+    </EditEntity>
+  );
+};
+
+export default EditActorPage;

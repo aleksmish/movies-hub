@@ -84,7 +84,7 @@ const MovieForm = (props: MoviesFormProps) => {
             <ImageField
               displayName="Poster"
               fieldName="poster"
-              imageURL={props.movieCreation?.posterURL || ""}
+              pictureURL={props.movieCreation?.posterURL || ""}
             />
             <SelectField
               displayName="Genres"

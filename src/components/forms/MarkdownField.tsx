@@ -15,7 +15,7 @@ const MarkdownField = ({displayName, fieldName}: MarkdownFieldProps) => {
       <div className='w-[calc(50%-20px)]'>
         <label htmlFor={fieldName}>{displayName}</label>
         <div>
-          <TextArea className='w-full' onChange={handleChange} name={fieldName} id={fieldName} />
+          <TextArea className='w-full' onChange={handleChange} name={fieldName} id={fieldName} value={values[fieldName]} />
         </div>
       </div>
       <div className='w-[calc(50%-20px)]'>

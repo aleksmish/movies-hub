@@ -1,17 +1,17 @@
 import { Button, Image, Input } from 'antd';
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, MouseEvent, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
 import { useFormikContext } from 'formik';
 
 type ImageFieldProps = {
   displayName: string;
   fieldName: string;
-  imageURL?: string;
+  pictureURL?: string;
 }
 
 const ImageField = (props: ImageFieldProps) => {
   const [imageBase64, setImageBase64] = useState('')
-  const [imageURL, setImageURL] = useState(props.imageURL || "")
+  const [imageURL, setImageURL] = useState(props.pictureURL || "")
   const {values} = useFormikContext<any>()
   
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +29,14 @@ const ImageField = (props: ImageFieldProps) => {
     }
   }
 
+  const handleClick = (e: MouseEvent<HTMLElement>) => {
+    const label = document.createElement("label")
+    label.htmlFor = props.fieldName
+    document.body.appendChild(label)
+    label.click();
+    label.remove();
+  }
+
   const convertImageToBase64 = (file: File) => {
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader();
@@ -41,7 +49,7 @@ const ImageField = (props: ImageFieldProps) => {
   return (
     <div className='flex flex-col mt-4 mb-2'>
       <label className='mb-2' htmlFor={props.fieldName}>{props.displayName}</label>
-      <Button className='max-w-[200px]' icon={<UploadOutlined />}><label className='mb-2' htmlFor={props.fieldName}>Upload an Image</label></Button>
+      <Button className='pointer-events-fill w-full max-w-[200px]' icon={<UploadOutlined />} onClick={handleClick}>Upload an Image</Button>
       <Input type="file" accept=".jpg,.jpeg,.png" onChange={handleChange} name={props.fieldName} id={props.fieldName} className='hidden' />
       {imageBase64
         ?

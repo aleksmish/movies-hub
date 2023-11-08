@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { GenreCreation } from '../../../types/genres'
 import GenreForm from '../components/GenreForm'
-import { urlGenres } from '../../../endpoints'
+import { genresURL } from '../../../endpoints'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { NotificationPlacement } from 'antd/es/notification/interface'
@@ -14,7 +14,7 @@ const CreateGenrePage = () => {
 
   const handleCreateGenre = async (genre: GenreCreation) => {
     try {
-      await axios.post(urlGenres, genre);
+      await axios.post(genresURL, genre);
       navigate('/genres');
     } catch (error) {
       console.error(error);

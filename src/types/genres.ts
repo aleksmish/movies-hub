@@ -4,6 +4,5 @@ export type Genre = {
 }
 
 export type GenreCreation = {
-  id?: number;
   name: string;
 }

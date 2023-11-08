@@ -17,8 +17,9 @@ const DatePickerField = ({displayName, fieldName}: DatePickerProps) => {
         className="mb-0"
         id={fieldName}
         name={fieldName}
+        defaultValue={values[fieldName]}
         onChange={(date, dateString) => {
-          values[fieldName] = date?.format("DD/MM/YYYY")
+          values[fieldName] = date?.format("MM-DD-YYYY")
         }}
         format={"D MMMM YYYY"}
         placeholder=""

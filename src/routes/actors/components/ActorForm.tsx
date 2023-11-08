@@ -5,17 +5,18 @@ import ImageField from "../../../components/forms/ImageField";
 import DatePickerField from "../../../components/forms/DatePickerField";
 import TextField from "../../../components/forms/TextField";
 import MarkdownField from "../../../components/forms/MarkdownField";
+import { ActorCreation } from "../../../types/actors";
 
-const CreateActorForm = () => {
+type ActorFormProps = {
+  onSubmit: (actor: ActorCreation) => void;
+  actorCreation?: ActorCreation;
+}
+
+const ActorForm = ({actorCreation, onSubmit}: ActorFormProps) => {
   return (
     <Formik
-      initialValues={{ name: "", dateOfBirth: null, image: "", biography: ''   }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 1000);
-      }}
+      initialValues={actorCreation || { name: "", dateOfBirth: undefined, picture: undefined, biography: '', pictureURL: '' }}
+      onSubmit={onSubmit}
       validationSchema={Yup.object().shape({
         name: Yup.string()
           .required("This field is required")
@@ -32,7 +33,7 @@ const CreateActorForm = () => {
             displayName="Date of Birth"
             fieldName="dateOfBirth"
           />
-          <ImageField displayName="Image" fieldName="image" />
+          <ImageField displayName="Picture" fieldName="picture" pictureURL={actorCreation?.pictureURL} />
           <MarkdownField displayName="Biography" fieldName="biography" />
           <Button disabled={isSubmitting} htmlType="submit" className="mt-7">
             Submit
@@ -43,4 +44,4 @@ const CreateActorForm = () => {
   );
 };
 
-export default CreateActorForm;
+export default ActorForm;

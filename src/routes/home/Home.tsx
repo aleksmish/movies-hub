@@ -4,8 +4,8 @@ import { Movie } from '../../types/movies'
 import FilterMovies from './components/FilterMovies'
 
 const Home = () => {
-  const [genres, setGenres] = useState([])
-  const [movies, setMovies] = useState<Movie[] | null>([])
+  const [genres, setGenres] = useState(null)
+  const [movies, setMovies] = useState<Movie[] | null>(null)
 
   const moviesTest = [
     {
@@ -21,6 +21,8 @@ const Home = () => {
   ]
   useEffect(() => {
     setTimeout(() => {
+      // @ts-ignore
+      setMovies(moviesTest)
     }, 2000)
   }, [])
   return (

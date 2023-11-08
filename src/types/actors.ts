@@ -1,16 +1,18 @@
+import { Dayjs } from "dayjs";
+
 export type Actor = {
   id: number;
   name: string;
   biography: string;
-  dateOfBirth: Date,
+  dateOfBirth: Dayjs | Date | string,
   picture: string;
 }
 
 export type ActorCreation = {
   name: string;
-  dateOfBirth?: Date;
-  image?: File;
-  imageURL?: string;
+  dateOfBirth?: Dayjs | Date | string;
+  picture?: File;
+  pictureURL?: string;
   biography?: string;
 }
 

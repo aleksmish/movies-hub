@@ -1,18 +1,42 @@
-import { Button } from 'antd'
+import { Table } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { Actor } from '../../types/actors'
+import EntityPage from '../../components/EntityPage'
+import { actorsURL } from '../../endpoints'
+import { ColumnsType } from 'antd/es/table'
 
 const ActorsPage = () => {
   const navigate = useNavigate()
 
-  const handleClick = () => {
-    navigate("create")
-  }
+  const columns: ColumnsType<Actor> = [
+    {
+      title: "Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      width: 350,
+    },
+  ];
 
   return (
-    <div className="h-[70px] flex flex-col content-center max-w-[1200px] w-full m-auto p-5">
-      <h2 className='mt-5 mb-5 font-semibold text-xl leading-6'>Actors</h2>
-      <Button onClick={handleClick}>Create an Actor</Button>
-    </div>
+    <EntityPage<Actor>
+      url={actorsURL} title={"Actors"} entityName='Actor'>
+        {(actors, buttons) => (
+          <Table
+            className="mt-4 mb-2"
+            columns={columns}
+            dataSource={actors.map((actor) => ({
+              ...actor,
+              key: actor.id,
+              action: buttons(actor.id)
+            }))}
+            bordered
+            pagination={false}
+          />
+        )}
+    </EntityPage>
   )
 }
 
