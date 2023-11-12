@@ -4,3 +4,9 @@ export type MovieTheater = {
   latitude?: number;
   longtitude?: number;
 }
+
+export type MovieTheaterCreation = {
+  name: string;
+  latitude?: number;
+  longtitude?: number;
+}

@@ -1,7 +1,7 @@
 import { Button, Image, Input } from 'antd';
 import { ChangeEvent, MouseEvent, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
-import { useFormikContext } from 'formik';
+import { ErrorMessage, useFormikContext } from 'formik';
 
 type ImageFieldProps = {
   displayName: string;
@@ -77,6 +77,11 @@ const ImageField = (props: ImageFieldProps) => {
         :
           null
       }
+       <ErrorMessage
+        name={props.fieldName}
+        component="div"
+        children={(error: any) => <div className="text-[#ff4d4f]">{error.toString()}</div>}
+      />
     </div>
   )
 }

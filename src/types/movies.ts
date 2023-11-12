@@ -8,13 +8,11 @@ export type Movie = {
   poster: string;
   inTheaters: boolean;
   trailer: string;
-  summary?: string;
   releaseDate: Date;
+  summary?: string;
   genres: Genre[];
-  movieTheaters: MovieTheater[];
+  movieTheaters: (string | number)[];
   actors: MovieActor[];
-  userVote: number;
-  averageVote: number;
 }
 
 export type MovieCreation = {
@@ -23,12 +21,19 @@ export type MovieCreation = {
   trailer: string;
   releaseDate?: Date;
   poster?: File,
+  summary?: string;
   posterURL?: string;
   genresIds?: (string | number)[];
   movieTheatersIds?: (string | number)[];
+  actors?: MovieActor[];
 }
 
 export type LandingPage = {
   inTheaters: Movie[];
   upcomingReleases: Movie;
+}
+
+export type MoviesPostGetDTO = {
+  genres: Genre[];
+  movieTheaters: MovieTheater[];
 }

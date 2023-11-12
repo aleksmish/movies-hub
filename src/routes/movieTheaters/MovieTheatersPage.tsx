@@ -1,19 +1,43 @@
-import { Button } from 'antd'
-import { useNavigate } from 'react-router-dom'
+import { Table } from "antd";
+import { ColumnsType } from "antd/es/table";
+import EntityPage from "../../components/EntityPage";
+import { movieTheatersURL } from "../../endpoints";
+import { MovieTheater } from "../../types/movieTheater";
 
 const MovieTheatersPage = () => {
-  const navigate = useNavigate()
-
-  const handleClick = () => {
-    navigate("create")
-  }
+  const columns: ColumnsType<MovieTheater> = [
+    {
+      title: "Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      width: 350,
+    },
+  ];
 
   return (
-    <div className="h-[70px] flex flex-col content-center max-w-[1200px] w-full m-auto p-5">
-      <h2 className='mt-5 mb-5 font-semibold text-xl leading-6'>Movie Theaters</h2>
-      <Button onClick={handleClick}>Create a Movie Theater</Button>
-    </div>
-  )
-}
+    <EntityPage<MovieTheater>
+      url={movieTheatersURL}
+      title="Movie Theaters"
+      entityName="Movie Theater"
+    >
+      {(movieTheaters, buttons) => (
+        <Table
+          className="mt-4 mb-2"
+          columns={columns}
+          dataSource={movieTheaters.map((movieTheater) => ({
+            ...movieTheater,
+            key: movieTheater.id,
+            action: buttons(movieTheater.id),
+          }))}
+          bordered
+          pagination={false}
+        />
+      )}
+    </EntityPage>
+  );
+};
 
-export default MovieTheatersPage
+export default MovieTheatersPage;

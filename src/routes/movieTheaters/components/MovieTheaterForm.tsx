@@ -1,17 +1,17 @@
 import { Form, Formik } from 'formik'
 import * as Yup from "yup"
 import TextField from '../../../components/forms/TextField'
-import { MovieTheater } from '../../../types/movieTheater'
+import { MovieTheaterCreation } from '../../../types/movieTheater'
 import MapField from '../../../components/forms/MapField'
 import { Coordinates } from '../../../types/coordinates'
 import { Button } from 'antd'
 
 type MovieTheaterFormProps = {
-  movieTheater?: MovieTheater;
+  movieTheater?: MovieTheaterCreation;
+  onSubmit: (movieTheater: MovieTheaterCreation) => void;
 }
 
-const MovieTheaterForm = ({movieTheater}: MovieTheaterFormProps) => {
-
+const MovieTheaterForm = ({onSubmit, movieTheater}: MovieTheaterFormProps) => {
   const transformCoordinates = (): Coordinates[] | undefined => {
     if (movieTheater?.latitude && movieTheater?.longtitude) {
       const response: Coordinates = {lat: movieTheater.latitude, lng: movieTheater.longtitude};
@@ -23,13 +23,8 @@ const MovieTheaterForm = ({movieTheater}: MovieTheaterFormProps) => {
   return (
     <div className='flex flex-col'>
       <Formik
-        initialValues={{ name: movieTheater?.name, latitude: movieTheater?.latitude, longtitude: movieTheater?.longtitude }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 1000);
-        }}
+        initialValues={movieTheater || { name: "", latitude: 0, longtitude: 0 }}
+        onSubmit={onSubmit}
         validationSchema={Yup.object().shape({
           name: Yup.string()
             .required("This field is required")

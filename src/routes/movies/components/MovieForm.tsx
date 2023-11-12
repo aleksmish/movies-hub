@@ -10,7 +10,8 @@ import SelectField, { Option } from "../../../components/forms/SelectField";
 import { useState } from "react";
 import { Genre } from "../../../types/genres";
 import { MovieTheater } from "../../../types/movieTheater";
-import AutoCompleteField from "../../../components/forms/AutoCompleteField";
+import MarkdownField from "../../../components/forms/MarkdownField";
+import ActorsAutoComplete from "./ActorsAutoComplete";
 
 type MoviesFormProps = {
   movieCreation?: MovieCreation;
@@ -18,6 +19,7 @@ type MoviesFormProps = {
   selectedMovieThetears?: MovieTheater[];
   genres: Genre[];
   movieTheaters: MovieTheater[];
+  onSubmit: (movieCreation: MovieCreation) => Promise<void>;
 };
 
 const MovieForm = (props: MoviesFormProps) => {
@@ -29,11 +31,12 @@ const MovieForm = (props: MoviesFormProps) => {
   );
   const [genres, setGenres] = useState(props.genres);
   const [movieTheaters, setMovieTheaters] = useState(props.movieTheaters);
+  const [selectedActors, setSelectedActors] = useState([]);
 
-  const convertDataToOptions = (genres: Genre[] | MovieTheater[]): Option[] => {
-    return genres.map((genre) => ({
-      value: genre.name,
-      label: genre.name,
+  const convertDataToOptions = (data: Genre[] | MovieTheater[]): Option[] => {
+    return data.map((data) => ({
+      value: data.id,
+      label: data.name,
     }));
   };
 
@@ -46,33 +49,29 @@ const MovieForm = (props: MoviesFormProps) => {
             inTheaters: false,
             trailer: "",
             releaseDate: undefined,
-            posterURL: "",
+            poster: undefined,
+            summary: "",
+            actors: [],
           }
         }
-        onSubmit={(values, actions) => {
-          values.genresIds = selectedGenres.map(
-            (selectedGenre) => selectedGenre.name
-          );
-          values.movieTheatersIds = selectedMovieTheaters.map(
-            (selectedMovieTheater) => selectedMovieTheater.name
-          );
-          alert(JSON.stringify(values));
-        }}
+        onSubmit={props.onSubmit}
         validationSchema={Yup.object().shape({
-          title: Yup.string()
+            title: Yup.string()
             .required("This field is required")
             .firstLetterUppercase()
             .min(5, "This field must be at least 5 characters")
             .max(50, "This field must be at most 50 characters"),
-          trailer: Yup.string()
+            trailer: Yup.string()
             .required("This field is required")
-            .firstLetterUppercase()
             .min(5, "This field must be at least 5 characters")
             .max(50, "This field must be at most 50 characters"),
           releaseDate: Yup.string().required("This field is required"),
+          summary: Yup.string()
+            .required("This field is required")
+            .firstLetterUppercase(),
         })}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, values, setFieldValue }) => (
           <Form className="flex flex-col">
             <TextField displayName="Title" fieldName="title" />
             <CheckboxField displayName="In Theaters" fieldName="inTheaters" />
@@ -86,19 +85,24 @@ const MovieForm = (props: MoviesFormProps) => {
               fieldName="poster"
               pictureURL={props.movieCreation?.posterURL || ""}
             />
+            <MarkdownField displayName="Summary" fieldName="summary" />
             <SelectField
               displayName="Genres"
               options={convertDataToOptions(genres)}
               selectedOptions={convertDataToOptions(selectedGenres)}
-              onChange={() => {}}
+              onChange={(selectedGenresIds) => {
+                setFieldValue('genresIds', selectedGenresIds)
+              }}
             />
             <SelectField
               displayName="Movie Theater"
               options={convertDataToOptions(movieTheaters)}
               selectedOptions={convertDataToOptions(selectedMovieTheaters)}
-              onChange={() => {}}
+              onChange={(selectedMovieTheatersIds) => {
+                setFieldValue('movieTheatersIds', selectedMovieTheatersIds)
+              }}
             />
-            <AutoCompleteField displayName="Actors" fieldName="actors" actors={[]} />
+            <ActorsAutoComplete />
             <Button disabled={isSubmitting} htmlType="submit" className="mt-7">
               Save Changes
             </Button>

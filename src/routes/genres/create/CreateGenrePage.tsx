@@ -37,7 +37,7 @@ const CreateGenrePage = () => {
   }, [errors]);
 
   return (
-    <div className="h-[70px] flex flex-col content-center max-w-[1200px] w-full m-auto p-5">
+    <div className="h-[70px] flex flex-col content-center max-w-[1200px] w-full m-auto p-5 mb-5">
       {contextHolder}
       <h3 className='mt-5 mb-5 font-semibold text-xl leading-6'>Create a Genre</h3>
       <GenreForm onSubmit={handleCreateGenre} />

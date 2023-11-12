@@ -1,4 +1,5 @@
 import { ActorCreation } from "../types/actors";
+import { MovieCreation } from "../types/movies";
 
 export function convertActorToFormData(actor: ActorCreation): FormData {
   const formData = new FormData()
@@ -16,6 +17,33 @@ export function convertActorToFormData(actor: ActorCreation): FormData {
   if (actor.picture) {
     formData.append('picture', actor.picture);
   }
+
+  return formData;
+}
+
+export function convertMovieToFormData(movie: MovieCreation): FormData {
+  const formData = new FormData()
+
+  formData.append('title', movie.title)
+
+  if (movie.summary) {
+    formData.append('summary', movie.summary)
+  }
+
+  formData.append('trailer', movie.trailer)
+  formData.append('inTheaters', String(movie.inTheaters))
+
+  if (movie.releaseDate) {
+    formData.append('releaseDate', formatDate(movie.releaseDate as Date))
+  }
+
+  if (movie.poster) {
+    formData.append('poster', movie.poster);
+  }
+
+  formData.append('genresIds', JSON.stringify(movie.genresIds))
+  formData.append('movieTheatersIds', JSON.stringify(movie.movieTheatersIds))
+  formData.append('actors', JSON.stringify(movie.actors))
 
   return formData;
 }

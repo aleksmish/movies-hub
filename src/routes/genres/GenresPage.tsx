@@ -26,7 +26,7 @@ const GenresPage = () => {
             dataSource={genres.map((genre) => ({
               ...genre,
               key: genre.id,
-              action: buttons(genre.id)
+              action: buttons(genre.id),
             }))}
             bordered
             pagination={false}
