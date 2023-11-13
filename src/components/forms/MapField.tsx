@@ -1,4 +1,4 @@
-import Map from '../Map'
+import Map from '../shared/Map'
 import { Coordinates } from '../../types/coordinates'
 import { useFormikContext } from 'formik';
 
