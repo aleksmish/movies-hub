@@ -5,7 +5,7 @@ import EntityPage from '../components/shared/EntityPage'
 import { actorsURL } from '../endpoints'
 import { ColumnsType } from 'antd/es/table'
 
-const ActorsPage = () => {
+const Actors = () => {
   const navigate = useNavigate()
 
   const columns: ColumnsType<Actor> = [
@@ -40,4 +40,4 @@ const ActorsPage = () => {
   )
 }
 
-export default ActorsPage
+export default Actors

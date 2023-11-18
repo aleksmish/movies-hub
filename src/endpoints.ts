@@ -6,3 +6,5 @@ export const actorsURL = baseURL + '/actors'
 
 export const movieTheatersURL = baseURL + '/movie-theaters'
 export const moviesURL = baseURL + '/movies'
+export const accountsURL = baseURL + '/accounts'
+export const ratingsURL = baseURL + '/ratings'

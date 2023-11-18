@@ -4,9 +4,10 @@ import { ErrorMessage, useFormikContext } from "formik";
 type TextFieldProps = {
   displayName: string;
   fieldName: string;
+  type?: string;
 };
 
-const TextField = ({ displayName, fieldName }: TextFieldProps) => {
+const TextField = ({ displayName, fieldName, type = "text" }: TextFieldProps) => {
   const { handleChange, values, errors } = useFormikContext<any>();
   return (
     <div className="flex flex-col mt-4 mb-2">
@@ -14,8 +15,8 @@ const TextField = ({ displayName, fieldName }: TextFieldProps) => {
         {displayName}
       </label>
       <Input
-        // status={errors[fieldName] ? "error" : undefined}
-        type="text"
+        status={errors[fieldName] ? "error" : undefined}
+        type={type}
         name={fieldName}
         id={fieldName}
         value={values[fieldName]}

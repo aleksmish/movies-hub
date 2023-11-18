@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import { MovieActor } from "../../types/actors";
+import { Actor, MovieActor } from "../../types/actors";
 import { Fragment, useEffect, useState } from "react";
 import { actorsURL } from "../../endpoints";
 import axios, { AxiosResponse } from "axios";
@@ -29,7 +29,11 @@ const ActorOptionLabel = ({ picture, name }: ActorOptionLabelProps) => {
   );
 };
 
-const ActorsAutoComplete = () => {
+type ActorsAutoComplete = {
+  selectedActors: Option[];
+}
+
+const ActorsAutoComplete = ({selectedActors}: ActorsAutoComplete) => {
   const [actors, setActors] = useState<MovieActor[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { values, setFieldValue } = useFormikContext<any>();
@@ -40,7 +44,7 @@ const ActorsAutoComplete = () => {
     picture: actor.picture,
   }));
 
-  const handleSearch = (query: string) => {
+  const handleSearch = (query: string): void => {
     if (!query) return;
 
     setIsLoading(true);
@@ -58,7 +62,7 @@ const ActorsAutoComplete = () => {
         loading={isLoading}
         displayName="Actors"
         options={actorsOptions}
-        selectedOptions={[]}
+        selectedOptions={selectedActors}
         onSearch={handleSearch}
         optionRender={option => <ActorOptionLabel picture={option.data.picture} name={option.data.label} />}
         onSelect={value => {
@@ -72,8 +76,8 @@ const ActorsAutoComplete = () => {
         }}
       />
       <label className="mb-2">Characters</label>
-      <div className="flex flex-col gap-5 content-center mt-2">
-        {values?.actors.map((actor: any) => (
+      <div className="flex flex-col gap-5 content-center mt-2 mb-5">
+        {values?.actors?.map((actor: any) => (
           <div key={actor.id} className="w-full  flex flex-row content-center align-middle items-center">
             <div className="h-auto">
               <Image
@@ -87,6 +91,7 @@ const ActorsAutoComplete = () => {
             </div>
             <Input
               placeholder="Character"
+              defaultValue={actor.character}
               onChange={value => {
                 const index = values.actors.findIndex((val: any) => val.id === actor.id)
                 values.actors[index].character = value.target.value

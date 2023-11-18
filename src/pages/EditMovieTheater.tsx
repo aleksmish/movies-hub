@@ -6,7 +6,7 @@ import {
 } from "../types/movieTheater";
 import MovieTheaterForm from "../components/movieTheaters/MovieTheaterForm";
 
-const EditMovieTheaterPage = () => {
+const EditMovieTheater = () => {
   return (
     <EditEntity<MovieTheaterCreation, MovieTheater>
       url={movieTheatersURL}
@@ -23,4 +23,4 @@ const EditMovieTheaterPage = () => {
   );
 };
 
-export default EditMovieTheaterPage;
+export default EditMovieTheater;

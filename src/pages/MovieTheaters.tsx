@@ -4,7 +4,7 @@ import EntityPage from "../components/shared/EntityPage";
 import { movieTheatersURL } from "../endpoints";
 import { MovieTheater } from "../types/movieTheater";
 
-const MovieTheatersPage = () => {
+const MovieTheaters = () => {
   const columns: ColumnsType<MovieTheater> = [
     {
       title: "Name",
@@ -40,4 +40,4 @@ const MovieTheatersPage = () => {
   );
 };
 
-export default MovieTheatersPage;
+export default MovieTheaters;

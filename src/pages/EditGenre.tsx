@@ -3,7 +3,7 @@ import { genresURL } from "../endpoints";
 import { Genre, GenreCreation } from "../types/genres";
 import GenreForm from "../components/genres/GenreForm";
 
-const EditGenrePage = () => {
+const EditGenre = () => {
   return (
     <EditEntity<GenreCreation, Genre>
       url={genresURL}
@@ -22,4 +22,4 @@ const EditGenrePage = () => {
   );
 };
 
-export default EditGenrePage;
+export default EditGenre;

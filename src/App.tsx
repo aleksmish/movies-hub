@@ -1,54 +1,56 @@
-import "./input.css";
-import { Routes, Route } from 'react-router-dom';
-import Navigation from "./pages/Navigation";
-import Home from "./pages/Home";
-import GenresPage from './pages/Genres';
-import configureValidations from './validations';
-import CreateGenrePage from "./pages/CreateGenre";
-import ActorsPage from './pages/Actors';
-import CreateActorPage from './pages/CreateActor';
-import EditActorPage from './pages/EditActor';
-import MovieTheatersPage from "./pages/MovieTheaters";
-import CreateMovieTheaterPage from "./pages/CreateMovies";
-import EditMovieTheaterPage from "./pages\/EditMovieTheater";
-import MoviesPage from "./pages/Movies";
-import CreateMoviePage from "./pages/CreateMovie";
-import EditMoviePage from "./pages/EditMovie";
-import EditGenrePage from "./pages/EditGenre";
 import { ConfigProvider } from "antd";
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Footer from "./components/shared/Footer";
+import Navigation from "./components/shared/Navigation";
+import "./input.css";
+import routes from "./routes";
+import AuthenticationContext from "./store/AuthContext";
+import { Claim } from "./types/claim";
+import configureValidations from "./validations";
+import NotAllowed from "./components/shared/NotAllowed";
+import { getClaims } from "./utils/handleJWT";
+import configureInterceptor from "./httpInterceptors";
 
 configureValidations();
+configureInterceptor();
 
 function App() {
+  const [claims, setClaims] = useState<Claim[]>([]);
+
+  const isAdmin = () => {
+    return (
+      claims.findIndex(
+        (claim) => claim.name === "role" && claim.value === "admin"
+      ) >= 0
+    );
+  };
+
+  useEffect(() => {
+    setClaims(getClaims());
+  }, [])
+
   return (
     <ConfigProvider>
-      <Routes>
-        <Route path="/" element={<Navigation />}>
-          <Route index element={<Home />} />
-          <Route path='genres'>
-            <Route index element={<GenresPage />} />
-            <Route path='create' element={<CreateGenrePage />} />
-            <Route path='edit/:id' element={<EditGenrePage />} />
-          </Route>
-          <Route path='actors'>
-            <Route index element={<ActorsPage />} />
-            <Route path='create' element={<CreateActorPage />} />
-            <Route path='edit/:id' element={<EditActorPage />} />
-          </Route>
-          <Route path='movie-theaters'>
-            <Route index element={<MovieTheatersPage />} />
-            <Route path='create' element={<CreateMovieTheaterPage />} />
-            <Route path='edit' element={<EditMovieTheaterPage />} />
-            <Route path='edit/:id' element={<EditMovieTheaterPage />} />
-          </Route>
-          <Route path='movies'>
-            <Route index element={<MoviesPage />} />
-            <Route path='create' element={<CreateMoviePage />} />
-            <Route path='edit' element={<EditMoviePage />} />
-          </Route>
-          <Route path='*' element={<div>The page is not found</div>} />
-        </Route>
-      </Routes>
+      <AuthenticationContext.Provider value={{ claims, update: setClaims }}>
+        <Navigation />
+        <Routes>
+          {routes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                route.isAdmin && !isAdmin() ? (
+                  <NotAllowed />
+                ) : (
+                  <route.component />
+                )
+              }
+            />
+          ))}
+        </Routes>
+        <Footer />
+      </AuthenticationContext.Provider>
     </ConfigProvider>
   );
 }

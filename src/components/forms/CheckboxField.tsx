@@ -7,10 +7,10 @@ type CheckboxFieldProps = {
 }
 
 const CheckboxField = ({displayName, fieldName}: CheckboxFieldProps) => {
-  const {handleChange} = useFormikContext<any>()
+  const {values, handleChange} = useFormikContext<any>()
   return (
     <div className='mt-4 mb-2 flex flex-col'>
-      <Checkbox className="text-[16px]" name={fieldName} id={fieldName} onChange={handleChange}>{displayName}</Checkbox>
+      <Checkbox className="text-[16px]" name={fieldName} checked={values[fieldName]} id={fieldName} onChange={handleChange}>{displayName}</Checkbox>
       <ErrorMessage
         name={fieldName}
         component="div"

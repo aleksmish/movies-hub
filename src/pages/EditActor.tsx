@@ -5,7 +5,7 @@ import { convertActorToFormData } from "../utils/formData";
 import ActorForm from "../components/actors/ActorForm";
 import dayjs from "dayjs";
 
-const EditActorPage = () => {
+const EditActor = () => {
   const transform = (actor: Actor): ActorCreation => {
     return {
       name: actor.name,
@@ -33,4 +33,4 @@ const EditActorPage = () => {
   );
 };
 
-export default EditActorPage;
+export default EditActor;

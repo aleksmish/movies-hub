@@ -4,7 +4,7 @@ import EntityPage from "../components/shared/EntityPage";
 import { genresURL } from "../endpoints";
 import { Genre } from "../types/genres";
 
-const GenresPage = () => {
+const Genres = () => {
   const columns: ColumnsType<Genre> = [
     {
       title: "Name",
@@ -37,4 +37,4 @@ const GenresPage = () => {
   );
 };
 
-export default GenresPage;
+export default Genres;

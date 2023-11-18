@@ -1,16 +1,17 @@
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
-import TextField from "../forms/TextField";
 import { Button } from "antd";
-import { MovieCreation } from "../../types/movies";
-import DatePickerField from "../forms/DatePickerField";
-import ImageField from "../forms/ImageField";
-import CheckboxField from "../forms/CheckboxField";
-import SelectField, { Option } from "../forms/SelectField";
+import { Form, Formik } from "formik";
 import { useState } from "react";
+import * as Yup from "yup";
+import { Actor } from "../../types/actors";
 import { Genre } from "../../types/genres";
 import { MovieTheater } from "../../types/movieTheater";
+import { MovieCreation } from "../../types/movies";
+import CheckboxField from "../forms/CheckboxField";
+import DatePickerField from "../forms/DatePickerField";
+import ImageField from "../forms/ImageField";
 import MarkdownField from "../forms/MarkdownField";
+import SelectField, { Option } from "../forms/SelectField";
+import TextField from "../forms/TextField";
 import ActorsAutoComplete from "./ActorsAutoComplete";
 
 type MoviesFormProps = {
@@ -19,6 +20,7 @@ type MoviesFormProps = {
   selectedMovieThetears?: MovieTheater[];
   genres: Genre[];
   movieTheaters: MovieTheater[];
+  selectedActors?: Actor[];
   onSubmit: (movieCreation: MovieCreation) => Promise<void>;
 };
 
@@ -29,11 +31,15 @@ const MovieForm = (props: MoviesFormProps) => {
   const [selectedMovieTheaters, setSelectedMovieTheaters] = useState(
     props.selectedMovieThetears || []
   );
+  const [selectedActors, setSelectedActors] = useState(
+    props.selectedActors || []
+  );
   const [genres, setGenres] = useState(props.genres);
   const [movieTheaters, setMovieTheaters] = useState(props.movieTheaters);
-  const [selectedActors, setSelectedActors] = useState([]);
-
-  const convertDataToOptions = (data: Genre[] | MovieTheater[]): Option[] => {
+  
+  const convertDataToOptions = (
+    data: Genre[] | MovieTheater[] | Actor[]
+  ): Option[] => {
     return data.map((data) => ({
       value: data.id,
       label: data.name,
@@ -56,12 +62,12 @@ const MovieForm = (props: MoviesFormProps) => {
         }
         onSubmit={props.onSubmit}
         validationSchema={Yup.object().shape({
-            title: Yup.string()
+          title: Yup.string()
             .required("This field is required")
             .firstLetterUppercase()
             .min(5, "This field must be at least 5 characters")
             .max(50, "This field must be at most 50 characters"),
-            trailer: Yup.string()
+          trailer: Yup.string()
             .required("This field is required")
             .min(5, "This field must be at least 5 characters")
             .max(50, "This field must be at most 50 characters"),
@@ -91,7 +97,7 @@ const MovieForm = (props: MoviesFormProps) => {
               options={convertDataToOptions(genres)}
               selectedOptions={convertDataToOptions(selectedGenres)}
               onChange={(selectedGenresIds) => {
-                setFieldValue('genresIds', selectedGenresIds)
+                setFieldValue("genresIds", selectedGenresIds);
               }}
             />
             <SelectField
@@ -99,10 +105,12 @@ const MovieForm = (props: MoviesFormProps) => {
               options={convertDataToOptions(movieTheaters)}
               selectedOptions={convertDataToOptions(selectedMovieTheaters)}
               onChange={(selectedMovieTheatersIds) => {
-                setFieldValue('movieTheatersIds', selectedMovieTheatersIds)
+                setFieldValue("movieTheatersIds", selectedMovieTheatersIds);
               }}
             />
-            <ActorsAutoComplete />
+            <ActorsAutoComplete
+              selectedActors={convertDataToOptions(selectedActors)}
+            />
             <Button disabled={isSubmitting} htmlType="submit" className="mt-7">
               Save Changes
             </Button>

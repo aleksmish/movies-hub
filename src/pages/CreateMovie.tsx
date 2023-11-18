@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { moviesURL } from "../endpoints";
 import { Genre } from "../types/genres";
 import { MovieTheater } from "../types/movieTheater";
-import { MovieCreation, MoviesPostGetDTO } from "../types/movies";
+import { MovieCreation, MoviesPostGet } from "../types/movies";
 import { convertMovieToFormData } from "../utils/formData";
 import MovieForm from "../components/movies/MovieForm";
 
-const CreateMoviePage = () => {
+const CreateMovie = () => {
   const [api, contextHolder] = notification.useNotification();
   const [genres, setGenres] = useState<Genre[]>([]);
   const [movieTheaters, setMovieTheaters] = useState<MovieTheater[]>([]);
@@ -46,7 +46,7 @@ const CreateMoviePage = () => {
   useEffect(() => {
     axios
       .get(`${moviesURL}/postget`)
-      .then((response: AxiosResponse<MoviesPostGetDTO>) => {
+      .then((response: AxiosResponse<MoviesPostGet>) => {
         setGenres(response.data.genres);
         setMovieTheaters(response.data.movieTheaters);
         setIsLoading(false);
@@ -82,4 +82,4 @@ const CreateMoviePage = () => {
   );
 };
 
-export default CreateMoviePage;
+export default CreateMovie;
