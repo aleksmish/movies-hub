@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Movie from "./pages/Movie";
 import MovieTheaters from "./pages/MovieTheaters";
 import Register from "./pages/Register";
+import Users from "./pages/Users";
 
 const routes = [
     {path: '/genres', component: Genres, isAdmin: true},
@@ -36,7 +37,7 @@ const routes = [
 
     {path: '/register', component: Register},
     {path: '/login', component: Login},
-    // {path: '/users', component: Users, isAdmin: true},
+    {path: '/users', component: Users, isAdmin: true},
 
 
     {path: '/', component: Home},

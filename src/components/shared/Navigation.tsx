@@ -20,7 +20,7 @@ const Navigation = () => {
             <Link to="/">MoviesHub</Link>
           </h1>
         </div>
-        <div className="flex gap-5 flex-row self-center justify-center content-center">
+        <div className="flex gap-5 flex-row self-center justify-center items-center">
           <Authorized
             role="admin"
             authorized={
@@ -36,6 +36,9 @@ const Navigation = () => {
                 </div>
                 <div>
                   <Link to="/movie-theaters">Movie Theaters</Link>
+                </div>
+                <div>
+                  <Link to="/users">Users</Link>
                 </div>
               </>
             }

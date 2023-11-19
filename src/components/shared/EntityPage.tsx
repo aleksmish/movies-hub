@@ -15,6 +15,7 @@ import SelectRecordsPerPage from "../forms/SelectRecordsPerPage";
 
 type EntityPageProps<T> = {
   url: string;
+  createURL?: string;
   title: string;
   entityName: string;
   children: (
@@ -23,8 +24,9 @@ type EntityPageProps<T> = {
   ) => ReactElement;
 };
 
-const EntityPage = <T extends { id: number }>({
+const EntityPage = <T extends { id: number | string }>({
   url,
+  createURL,
   title,
   entityName,
   children,
@@ -129,9 +131,11 @@ const EntityPage = <T extends { id: number }>({
     <div className="flex flex-col content-center max-w-[1200px] w-full m-auto p-5">
       {contextHolder}
       <h2 className="mt-5 mb-5 font-semibold text-xl leading-6">{title}</h2>
-      <Button onClick={handleNavigateToCreateEntity}>
-        Create {entityName}
-      </Button>
+      {createURL && (
+        <Button onClick={handleNavigateToCreateEntity}>
+          Create {entityName}
+        </Button>
+      )}
       <SelectRecordsPerPage onChange={handleSelectRecrodsPerPage} />
       <Pagination
         className="mt-4 mb-2"

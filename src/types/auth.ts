@@ -12,3 +12,8 @@ export type AuthenticationResponse = {
   token: string;
   expiration: Date;
 }
+
+export type User = {
+  id: string;
+  email: string;
+}
